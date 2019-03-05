@@ -1,0 +1,27 @@
+{
+  "name": "cognitio",
+  "version": "1.0.0",
+  "description": "online library management",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xeron07/cognitioOnline.git"
+  },
+  "author": "Md. Minhaz Uddin, Hasan Adnan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xeron07/cognitioOnline/issues"
+  },
+  "homepage": "https://github.com/Xeron07/cognitioOnline#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "jquery": "^3.3.1",
+    "path": "^0.12.7",
+    "router": "^1.3.3"
+  }
+}
