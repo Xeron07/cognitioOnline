@@ -1,0 +1,129 @@
+
+.bg-section {
+    background-image: url(../images/back.jpg);
+    background-color: #f4f4f4;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 900px;
+    margin-top: 0px;
+    text-align: center;
+    color: white;
+
+    opacity: .5;
+
+}
+.bg-section2 {
+    margin-top: -820px;
+    padding: 0;
+}
+.bg-section2 .sign_up legend {
+    width: 90%;
+    padding: 5px;
+    margin-bottom: 20px;
+    margin-top: -5px;
+    margin-left: 25px;
+    font-size: 21px;
+    line-height: inherit;
+    color: white;
+    border: 0;
+    border-bottom: 5px none #e5e5e5;
+    background-color: brown;
+    border-radius: 50px;
+
+}
+
+.bg-section2 .sign_up hr{
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0;
+    border-top: 5px solid #ed145b;
+    margin-left: 550px;
+    margin-right: 475px;
+    padding-top: 20px;
+}
+.bg-section2 .sign_up .regi legend{
+    margin-top: 10px;
+}
+.bg-section2 .sign_up .regi input{
+    float: right;
+    margin-right: 35px;
+    margin-left: 5px;
+}
+.bg-section2 .sign_up .regi label{
+    text-align: center;
+    margin-right: 155px;
+    margin-left: 55px;
+    background-color: #ed145b;
+    padding: 5px;
+    border-radius: 5px;
+}
+.bg-section2 .sign_up .regi{
+    color: #fff;
+    border: 5px solid white;
+    border-radius: 50px;
+    border-top-left-radius: 5px;
+    border-top-right-radius:5px;
+   /* background: transparent;*/
+   margin-top: 15px;
+}
+
+.bg-section2 .sign_up .gend{
+    margin-top: -20px;
+   border-left:  5px solid white;
+   border-right:   5px solid white;
+   border-bottom:   5px solid white;
+    border-radius: 25px;
+
+}
+.bg-section2 .sign_up .gend label{
+    padding: 5px;
+    background-color: #ed145b;
+    color: white;
+    border-radius: 5px;
+}
+
+.bg-section2 .sign_up .dob{
+    color: #fff;
+    margin-top: -20px;
+    text-align: center;
+    background-color: white;
+    background: transparent;       
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left:  5px solid white;
+   border-right:   5px solid white;
+   border-bottom:   5px solid white;
+    border-radius: 25px;
+    padding-bottom: 25px;
+}
+.bg-section2 .sign_up .dob label{
+    padding: 5px;
+    background-color: #ed145b;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.bg-section2 h1{
+	color: #fff;
+    border: 5px solid #ed145b;
+    border-radius: 50px;
+    background-color: #ed145b;
+    text-align: center;
+    width: 100%;
+    margin-top: -50px;
+    margin-bottom: 50px;
+}
+.bg-section2 .btn-default{
+	color: #fff;
+    background-color: #ed145b;
+        border-color: transparent;
+        padding: 5px 25px;
+        border-radius: 25px;
+}
+.bg-section2 .btn-default:hover {
+    color: #ed145b;
+    background-color: #fff;
+    border-color: transparent;
+}
