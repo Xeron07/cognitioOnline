@@ -2,7 +2,7 @@
 var express  		= require('express');
 var login 			= require('./controllers/login');
 //var home 			= require('./controllers/home');
-//var logout 			= require('./controllers/logout');
+var logout 			= require('./controllers/logout');
 var signUp          =require('./controllers/signUp');
 var cognitio        =require('./controllers/cognitio');
 var bodyParser 		= require('body-parser');
@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use('/login', login);
 app.use('/signUp', signUp);
 //app.use('/home', home);
-//app.use('/logout', logout);
+app.use('/logout', logout);
 app.use('/ext', express.static('ext'))
 
 //ROUTES
