@@ -27,13 +27,25 @@
     <script src="/ext/custombox/dist/custombox.min.js"></script>
 
     <script src="/ext/custombox/dist/custombox.legacy.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
  
     
     <!--===========================================================================-->
     <style>
                  
     </style>
+    <%if(msgg!=null) {%>
     
+    <script>$(document).ready(function(){
+            Swal.fire({
+  text: '<%=msgg%>',
+  type: 'info',
+});
+            
+        });</script>
+<% } %>
+
     
     <body>
         
@@ -43,24 +55,25 @@
       <a class="nav-link" href="#">Admin</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Users</a>
+      <a class="nav-link" onclick="showUsers()" href="#">Users</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Books</a>
+      <a class="nav-link" onclick="showBooks()" href="#">Books</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Add Books</a>
+      <a class="nav-link" onclick="showAdding()" href="#">Borrows</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Add Books</a>
+      <a class="nav-link" onclick="showRequest()" href="#">Borrow Request</a>
     </li>
+   
   </ul>
   <ul class="navbar-nav">
-      <li class="nav-item active">
+      <li class="nav-item active" onclick="showRequest()">
       <a class="nav-link" href="#" data-toggle="tooltip" data-placement="top" title="Buy Request">
           <div class="center-things">
                 <p>
-                    <span class="fa-stack  has-badge" data-count="<%=x%>">
+                    <span class="fa-stack  has-badge" id="notify" data-count=0>
                     <i class="fa fa-circle-o fa-stack-2x" style="margin-left:-8px;margin-top:2px;" aria-hidden="true"></i>
                     <i class="fa fa-bell fa-inverse"></i>
                     </span>
@@ -81,12 +94,14 @@
     </li>
   </ul>
 </nav>
-<div class="container">        
-<div>
+<div class="container">     
+
+
+<div id="usersData">
     <br/>
     <h1 style="margin-left:30%; font-family: Georgia, 'Times New Roman', serif;"><u>All User Information</u></h1>
     <div class="inputWithIcon">
-           <input type="text" placeholder="Search from the list">
+           <input type="text" placeholder="Search from the list" id="sortUserInbox">
            <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
          </div><br/>
     
@@ -96,55 +111,128 @@
              <td>Id</td>
              <td>Name</td>
              <td>Email</td>
-             <td>Contact Info</td>
              <td>Operation</td>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="userTableBody">
+        <%for(var i=0;i<users.length;i++){%>
          <tr>
-             <td>Id</td>
-             <td>Name</td>
-             <td>Email</td>
-             <td>Contact Info</td>
-             <td>Operation</td>
+             <td><%=users[i].id%></td>
+             <td><%=users[i].name%></td>
+             <td><%=users[i].email%></td>
+             <td><button class="btn btn-outline-danger" onclick="deleteUser(<%=users[i].id%>)">Delete</td>
           </tr>
+          <%}%>
         </tbody>
     </table>
 </div> 
     
-<!--==================================Add Book==========================-->
-<div class="row col-lg-12">
-    <div class="col-lg-5">
-     <div class="box" >
-       <img id="preview" height="340" width="290" style="border-radius:5px;"alt="Book image"/>
-     </div>
-   
-        </div>
-    <!--======================book form====================-->
-     <div class="book-details col-lg-7" style="margin-left:100px">
-         <br/>
-        <table>
-            <tr><td style="padding:5px"><h3><strong><u>Book Information:</u></strong></h3></td>
-             <td style="padding:5px"></td></tr>
-         <tr><td style="padding:5px">Book Name: </td>
-             <td style="padding:5px"><input type="text" name="" id="" /></td></tr>
-            <tr><td style="padding:5px">Author: </td>
-             <td style="padding:5px"><input type="text" name="" id="" /></td></tr>
-            <tr><td style="padding:5px">Edition:</td>
-             <td style="padding:5px"><input class="form-control" type="number" name="" id="" /></td></tr>
-            <tr><td style="padding:5px">Book Type:</td>
-             <td style="padding:5px"><select class="form-control">
-                                          <option>Story</option>
-                                           <option>Science</option>
-                                           <option>Education</option>
-                                           <option>Magazine</option>
-                                      </select></tr>
-            <tr><td style="padding:5px">Publish Date:</td>
-             <td style="padding:5px"><input class="form-control" type="date" name="" id="" /></td></tr>
-            <tr><td style="padding:5px" colspan="2"><button type="button" class="btn btn-outline-success" style="width:100%">Add Book</button></td></tr>
-         </table>
-      </div>
-    </div>
+<!--===================================books ======================-->
+
+<div id="bookData">
+    <br/>
+    <h1 style="margin-left:30%; font-family: Georgia, 'Times New Roman', serif;"><u>All Books</u></h1>
+    <div class="inputWithIcon">
+           <input type="text" placeholder="Search from the list" id="bookTable">
+           <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+         </div><br/>
+    
+    <table class="table table-striped">
+      <thead style="background-color:#053022;color:White;text-transform: uppercase;">
+         <tr>
+             <td>Id</td>
+             <td>Name</td>
+             <td>Author</td>
+             <td>Publication</td>
+             <td>Edition</td>
+             <td>Publication Date</td>
+             <td>Category</td>
+             <td>Copies</td>
+          </tr>
+        </thead>
+        <tbody id="bookBody">
+        <%for(var i=0;i<books.length;i++){%>
+         <tr>
+             <td><%=books[i].ID%></td>
+             <td><%=books[i].bookName%></td>
+             <td><%=books[i].author%></td>
+             <td><%=books[i].publisher%></td>
+              <td><%=books[i].edition%></td>
+               <td><%=books[i].publishDate%></td>
+                <td><%=books[i].category%></td>
+             <td><%=books[i].copies%></td>
+          </tr>
+          <%}%>
+        </tbody>
+    </table>
+</div> 
+
+
+<!--==================borrow request=============================-->
+
+<div id="bookReq">
+    <br/>
+    <h1 style="margin-left:30%; font-family: Georgia, 'Times New Roman', serif;"><u>All Books</u></h1>
+    <div class="inputWithIcon">
+           <input type="text" placeholder="Search from the list">
+           <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+         </div><br/>
+    
+    <table class="table table-striped">
+      <thead style="background-color:#053022;color:White;text-transform: uppercase;">
+         <tr>
+             <td>Id</td>
+             <td>User Id</td>
+             <td>Book Id</td>
+             <td>Operation</td>
+          </tr>
+        </thead>
+        <tbody>
+        <%for(var i=0;i<booksreq.length;i++){%>
+         <tr>
+             <td><%=booksreq[i].id%></td>
+             <td><%=booksreq[i].uid%></td>
+             <td><%=booksreq[i].bid%></td>
+             <td><button class="btn btn-outline-success" onclick="acceptReq(<%=booksreq[i].id%>)">Accept</button>
+                 <button class="btn btn-outline-danger" onclick="notacceptReq(<%=booksreq[i].id%>)">cancel</button></td>
+          </tr>
+          <%}%>
+        </tbody>
+    </table>
+</div> 
+
+<!--====borrow===-->
+<div id="borrowBooks">
+    <br/>
+    <h1 style="margin-left:30%; font-family: Georgia, 'Times New Roman', serif;"><u>All Borrows</u></h1>
+    <div class="inputWithIcon">
+           <input type="text" placeholder="Search from the list">
+           <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+         </div><br/>
+    
+    <table class="table table-striped">
+      <thead style="background-color:#053022;color:White;text-transform: uppercase;">
+         <tr>
+             <td>Id</td>
+             <td>User Id</td>
+             <td>Book Id</td>
+             <td>Operation</td>
+          </tr>
+        </thead>
+        <tbody>
+        <%for(var i=0;i<borrow.length;i++){%>
+         <tr>
+             <td><%=borrow[i].id%></td>
+             <td><%=borrow[i].uid%></td>
+             <td><%=borrow[i].bid%></td>
+             <td><button class="btn btn-outline-success" onclick="returned(<%=borrow[i].id%>)">Returned</button>
+          </tr>
+          <%}%>
+        </tbody>
+    </table>
+</div> 
+
+
 
 <!--Container div end-->
 </div>        
@@ -153,6 +241,118 @@
         
     </body>
 <script>
+   var users=$("#usersData");
+   var books=$("#bookData");
+   var bookreq=$("#bookReq");
+   var addbooks=$("#borrowBooks");
+
+$('document').ready(function(){
+    users.show();
+     addbooks.hide();
+     books.hide();
+     getBorrowData();
+      bookreq.hide();
+      userSearch();
+       bookSearch();
+});
+
+   function showUsers(){
+     users.show();
+     addbooks.hide();
+     bookreq.hide();
+     books.hide();
+   }
+
+    function showAdding(){
+    console.log("in");
+     users.hide();
+     addbooks.show();
+      bookreq.hide();
+     books.hide();
+   }
+
+    function userSearch(){
+  $("#sortUserInbox").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#userTableBody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+}
+
+function bookSearch(){
+  $("#bookTable").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#bookBody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+}
+
+
+   function showBooks()
+   {
+     users.hide();
+     addbooks.hide();
+      bookreq.hide();
+     books.show();
+   }
+
+   function showRequest()
+   {
+     users.hide();
+     addbooks.hide();
+      bookreq.show();
+     books.hide();
+   }
+
+
+   function deleteUser(id)
+   {
+     var r =confirm("Are you sure to delete this user?");
+     if(r==true){
+     alert("User Deleted");
+     location.replace("/delete/"+id);
+     }
+   }
+
+   function acceptReq(id)
+   {
+     var r =confirm("Are you sure to accept this request?");
+     if(r==true){
+     alert("Accepted");
+     location.replace("/accept/"+id);
+     }
+   }
+
+
+   function returned(id)
+   {
+     var r =confirm("Are you sure ?");
+     if(r==true){
+     alert("Accepted");
+     location.replace("/return/"+id);
+     }
+   }
+
+   function notacceptReq(id)
+   {
+     var r =confirm("Are you sure not to accept this request?");
+     if(r==true){
+     alert("Cancelled");
+     location.replace("/notaccept/"+id);
+     }
+   }
+
+   function deleteBooks(id,name){
+       var r =confirm("Are you sure to delete "+name+" ?");
+     if(r==true){
+     alert("Book Deleted");
+     location.replace("/deleteBook/"+id);
+     }
+   }
+
+
     function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -164,6 +364,24 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+
+        function getBorrowData()
+        {
+           $.ajax({
+             type:"POST",
+             url:"/borrowReq",
+             success:function(result){
+                   console.log(result);
+                   document.getElementById("notify").setAttribute("data-count",result);
+
+             },
+             error: function(err)
+             {
+              console.log(err);
+             }
+           })
         }
     
     </script>

@@ -23,6 +23,9 @@
 <script src="/ext/custombox/dist/custombox.min.js"></script>
 
 <script src="/ext/custombox/dist/custombox.legacy.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
     
   
 </head>
@@ -41,25 +44,42 @@
     <div class="container">
     <div class="jumbotron" id="jumb">
     <h1 style="color:white">
-        <img id="imageF"  style="border-radius:50%;border:1" height="150px" width="150px"  src="/ext/images/01.png" onclick="openImagePreview()"/> User Name</h1>      
-    <p style="color:white;margin-left:10%">Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p>
+        <img id="imageF"  style="border-radius:50%;border:1" height="150px" width="150px" <% if(uList.pic!=""){%> src="/ext/user-img/<%=uList.pic;%>"
+        <%}else{%> src="/ext/user-img/default.png" <%}%> onclick="openImagePreview()"/> <%=uList.name;%></h1>      
+    <p style="color:white;margin-left:10%"></p>
   </div>
   
     
     
-    <nav style="margin-top:-30px;" class="navbar navbar-expand-sm bg-dark navbar-dark">
-       <a class="navbar-brand" href="#" id="navInfo">Information</a>
+    <nav style="margin-top:-30px;" class="navbar navbar-expand-sm bg-secondary navbar-dark">
+       <a class="navbar-brand" href="/home" >Home</a>
 
   <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="#" id="navCarry">Book Carried</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" id="navInfo">
+      <a class="nav-link" href="#" >Information</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" id="navHistory">History</a>
+    <li class="nav-item"  id="navCarry">
+      <a class="nav-link" href="#">Book Carried</a>
+    </li>
+    <li class="nav-item" id="navHistory">
+      <a class="nav-link" href="#" >History</a>
     </li>
         
-        </ul>    
+        </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item active" onclick="/logout">
+      <a class="nav-link" href="/logout" data-toggle="tooltip" data-placement="top" title="Log Out">
+          <p>
+          <span class="fa-stack  has-badge" >
+          <i class="fa fa-circle-o fa-stack-2x" style="margin-left:-10.5px;margin-top:1px;" aria-hidden="true"></i>
+          <i class="fa fa-sign-out" aria-hidden="true"></i><i style="margin-left: -10px">LogOut</i> 
+          </span>
+          </p>
+      </a>
+      
+    </li>
+  </ul>    
 </nav>
     <div id="info">
         <br/><h2><u>User Information:</u></h2><br/>
@@ -67,23 +87,23 @@
            <tbody>
                <tr>
                    <td><strong>Name:</strong></td>
-                   <td>Doe</td>
-                   <td><button class="btn btn-outline-warning">Change</button></td>
+                   <td><%=uList.name%></td>
+                   <td><button class="btn btn-outline-warning" onclick="nameChange()">Change</button></td>
                </tr>
                <tr>
                    <td><strong>Email:</strong></td>
-                   <td>Doe</td>
+                   <td><%=uList.email%></td>
                    <td><p style="color:#6e771f">* You can not change Email-Address.</p></td>
                </tr>
                <tr>
                    <td><strong>Contact Info:</strong></td>
-                   <td>Doe</td>
+                   <td>none</td>
                    <td><button class="btn btn-outline-warning">Change</button></td>
                </tr>
                <tr>
                    <td><strong>Password:</strong></td>
                    <td>XXXXXXXX</td>
-                   <td><button class="btn btn-outline-warning">Change</button></td>
+                   <td><button class="btn btn-outline-warning" onclick="passChange()">Change</button></td>
                </tr>
             </tbody>
         </table>
@@ -91,31 +111,29 @@
     <div id="carry">
         <br/><h2><u>Book Carry Data:</u></h2><br/>
          <div class="inputWithIcon">
-           <input type="text" placeholder="Search from the list">
+           <input type="text" placeholder="Search from the list" id="carryData">
            <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
          </div><br/>
-        <table class="table table-striped">
+        <table class="table table-striped" id="carryTable">
           <thead style="background-color:#202b28;color:white;text-transform: uppercase;">
             <tr>
+              <td>Book Id</td>
                 <td>Borrow Date</td>
-                <td>Book Id</td>
-                <td>Book Name</td>
                 <td>Return Date</td>
+                <td>Active</td>
+               
+                
               </tr>
             </thead>
-            <tbody>
+            <tbody id="carryBody">
+              <%for(var i=0;i<borrow.length;i++){ if(borrow[i].active==1){%>
                 <tr>
-                   <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
+                  <td><%=borrow[i].bid%></td>
+                  <td><%=borrow[i].borrowDate%></td>
+                  <td><%=borrow[i].returnDate%></td>
+                  <td><%=borrow[i].active%></td>  
                 </tr>
-                <tr>
-                   <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
+                <%}}%>
             </tbody>
         </table>
         
@@ -124,34 +142,26 @@
     <div id="history">
         <br/><h2><u>User History:</u></h2><br/>
          <div class="inputWithIcon">
-           <input type="text" placeholder="Search from the list">
+           <input type="text" placeholder="Search from the list" id="history">
            <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
          </div><br/>
-        <table class="table table-striped">
+        <table class="table table-striped" id="historyTable">
           <thead style="background-color:#202b28;color:white;text-transform: uppercase;">
             <tr>
                 <td>Date</td>
                 <td>Book Id</td>
-                <td>Book Name</td>
-                <td>Type</td>
                 <td>Return Date</td>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="historyBody">
+             <%for(var i=0;i<borrow.length;i++){%>
                 <tr>
-                   <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>Pdf</td>
-                    <td>4</td>
+                  <td><%=borrow[i].bid%></td>
+                  <td><%=borrow[i].borrowDate%></td>
+                  <td><%=borrow[i].returnDate%></td>
+                   
                 </tr>
-                <tr>
-                   <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>Book</td>
-                    <td>4</td>
-                </tr>
+                <%}%>
             </tbody>
         </table>
         
@@ -168,11 +178,14 @@
 <!--image previewer -->
   <div id="imagePreview" style="display:none">
       <div class="card" style="width:400px">
-  <img class="card-img-top" src="/ext/user-img/1.png" alt="Card image">
+  <img class="card-img-top" <% if(uList.pic!=""){%> src="/ext/user-img/<%=uList.pic;%>"
+        <%}else{%> src="/ext/user-img/default.png" <%}%> alt="Card image" id="preview">
   <div class="card-body">
     <h4 class="card-title">Change Image:</h4>
-    <p class="card-text"><input type="file" name="uimg" id="üimg" value="Change image"/></p>
-    <a href="#" class="btn btn-outline-primary">Upload</a>
+    <form  action="/imageupload" method="post" enctype="multipart/form-data">
+    <p class="card-text"><input type="file" name="uimg" id="üimg" value="Change image"  onchange="readURL(this)"/></p>
+    <a href="#"><button type="submit"  class="btn btn-outline-primary">Upload</button></a>
+  </form>
   </div>
 </div>
   </div>
@@ -194,6 +207,8 @@
         carry.hide();
         historyi.hide();
         previous=info;
+        historySearch();
+        carrySearch();
     });
     
     $("#navInfo").click(function()
@@ -214,10 +229,103 @@
         historyi.slideDown();   
         previous=historyi;
     });
+
+
+    function nameChange()
+    {
+          var name=prompt("Enter your name");
+          if(name!=null)
+          {
+               location.replace("/nameChange/"+name);
+          }
+    }
+    function passChange(){
+                     Swal.mixin({
+  input: 'text',
+  confirmButtonText: 'Next &rarr;',
+  showCancelButton: true,
+  progressSteps: ['1', '2']
+}).queue([
+  {
+    title: 'Changing Password',
+    text: 'Type Your New Password'
+  },
+  {
+    title: 'Changing Password',
+    text: 'Re-Type New Password'
+  }
+  
+]).then((result) => {
+  if (result.value) {
+    if((result.value[0]===result.value[1])&&result.value[0]!==""){
+        Swal.fire({
+  title: 'Are you sure?',
+  text: "Your password will be change!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, change it!'
+}).then((result2) => {
+  if (result2.value) {
+    location.replace("/passChange/"+result.value[0]);
+  }
+  else{
+    Swal.fire({
+  type: 'warning',
+  title: 'Oops...',
+  text: 'Password not changed',
+});
+  }
+});
+  }
+  else{
+           Swal.fire({
+  type: 'error',
+  title: 'Oops...',
+  text: 'Password not matched',
+});
+        }
+
+    
+  }
+})
+
+    }
    
 function openImagePreview(){
    // Open
    modal.open();
+}
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+ function historySearch(){
+  $("#history").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#historyBody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+}
+
+function carrySearch(){
+  $("#carryData").on("keyup", function() {
+      console.log("no");
+    var value = $(this).val().toLowerCase();
+    $("#carryBody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 }
 </script>    
 </html>

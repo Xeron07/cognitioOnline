@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,11 +8,27 @@
     <title>Sign Up Form by Colorlib</title>
 
     <!-- Font Icon -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/ext/login-style/fonts/material-icon/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     <!-- Main css -->
     <link rel="stylesheet" href="/ext/login-style/css/style.css">
+  <%if(err!=null) {%>
+    
+    <script>$(document).ready(function(){
+            Swal.fire({
+  type: 'error',
+  title: 'Oops...',
+  text: '<%=err%>'
+});
+            
+        });</script>
+<% } %>
+  
+
+
 </head>
 <body background="gray">
 	
@@ -21,25 +38,19 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form ng-app="regApp" name="reg" class="register-form" id="register-form" ng-controller="validateCtrl" novalidate method="POST">
+                        <form method="POST">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="uname" ng-model="uname" id="name" placeholder="Your Name" required ng-pattern="^[a-zA-Z ]$"/>
-                                <span style="color:red" ng-show="reg.uname.$dirty && reg.uname.$invalid">
-                            <span ng-show="reg.uname.$error.required" style="margin-top:-50px">*Name is required.</span>
-                            <span ng-show="reg.uname.$valid">*Invalid User Name.</span>
-                             </span>
+                                <input type="text" name="uname"  id="name" placeholder="Your Name" required />
+                              
                             </div>
                             
                             
                             
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" ng-model="email" name="email" id="email" placeholder="Your Email" required="email"/>
-                                  <span style="color:red" ng-show="reg.email.$dirty && reg.email.$invalid">
-                            <span ng-show="reg.email.$error.required">*Email is required.</span>
-                            <span ng-show="reg.email.$error.email">*Invalid email address.</span>
-                             </span>
+                                <input type="email"  name="email" id="email" placeholder="Your Email" required="email"/>
+                               
                             </div>
                           
                             
@@ -47,28 +58,26 @@
                             
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="pass" ng-model="pass" id="pass" placeholder="Password" required/>
-                                  <span style="color:red" ng-show="reg.pass.$dirty && reg.pass.$invalid">
-                            <span ng-show="reg.pass.$error.required">*Password required.</span>
-                             </span>
+                                <input type="password" name="pass"  id="pass" placeholder="Password" required/>
+                                  
                             </div>
                             
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" ng-model="re_pass" id="re_pass" placeholder="Repeat your password" required/>
-                                  <span style="color:red" ng-show="reg.re_pass.$dirty && reg.re_pass.$invalid">
-                            <span ng-show="reg.re_pass.$error.required">*Password required.</span>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" required/>
+                                 
                             
                              </span>
                             </div>
                             
                             
                             <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service" style="color:#3ba3a5"><u>Terms of service</u></a></label>
+                                <input type="checkbox"  id="agree-term" class="agree-term" onchange="enableButton(this)" required/>
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service" style="color:#3ba3a5" onclick="openTerms()"><u>Terms of service</u></a></label>
+
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register" disabled="true" />
                             </div>
                         </form>
                     </div>
@@ -90,17 +99,50 @@
 <script src="https://rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-1.3.3.min.js"></script>
 
 <script src="https://cdn.rawgit.com/sagrawal14/bootstrap-angular-validation/v1.0.4/dist/bootstrap-angular-validation-all.min.js"></script>
-    <script>
-          var app = angular.module("regApp", []);
-
-
-          app.controller('validateCtrl', function($scope) {
-                
-               });
-        $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
-     });
-</script>
+   <script type="text/javascript">
+    $('document').ready(function(){
+         swal.fire({
+            position:'bottom-end',
+            type:'warning',
+            title:'Registration disabled',
+            imageUrl:'/ext/images/info.png',
+            imageWidth:400,
+            imageHeight:200,
+            text:"click the check button to enable Registration.",
+            showConfirmButton:false,
+            timer:2500
+         });
+    });
+    function enableButton(checkVal){
+        if(checkVal.checked==true){
+       $("#signup").attr("disabled",false);
+         swal.fire({
+            position:'bottom-end',
+            type:'success',
+            title:'Registration enabled',
+            showConfirmButton:false,
+            timer:2500
+         });
+       }else{
+        $("#signup").attr("disabled",true);
+           swal.fire({
+            position:'bottom-end',
+            type:'warning',
+            title:'Registration disabled',
+            showConfirmButton:false,
+            timer:2500
+         });
+       }
+    }
+    
+    function openTerms()
+    {
+        swal.fire({
+            Title: "Terms & Conditions",
+            html:"<h3 style='color:#3ba3a5'>Use of this site is provided by Demos subject to the following Terms and Conditions:</h3><br/>1. Your use constitutes acceptance of these Terms and Conditions as at the date of your first use of the site.<br/>2. Demos reserves the rights to change these Terms and Conditions at any time by posting changes online. Your continued use of this site after changes are posted constitutes your acceptance of this agreement as modified.<br/>3. You agree to use this site only for lawful purposes, and in a manner which does not infringe the rights, or restrict, or inhibit the use and enjoyment of the site by any third party.<br/>4. This site and the information, names, images, pictures, logos regarding or relating to Demos are provided “as is” without any representation or endorsement made and without warranty of any kind whether express or implied. In no event will Demos be liable for any damages including, without limitation, indirect or consequential damages, or any damages whatsoever arising from the use or in connection with such use or loss of use of the site, whether in contract or in negligence.<br/>5. Demos does not warrant that the functions contained in the material contained in this site will be uninterrupted or error free, that defects will be corrected, or that this site or the server that makes it available are free of viruses or bugs or represents the full functionality, accuracy and reliability of the materials.<br/>6. Copyright restrictions: please refer to our Creative Commons license terms governing the use of material on this site.<br/>7. Demos takes no responsibility for the content of external Internet Sites.<br/>8. Any communication or material that you transmit to, or post on, any public area of the site including any data, questions, comments, suggestions, or the like, is, and will be treated as, non-confidential and non-proprietary information.<br/>9. If there is any conflict between these Terms and Conditions and rules and/or specific terms of use appearing on this site relating to specific material then the latter shall prevail.<br/>10. These terms and conditions shall be governed and construed in accordance with the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the Courts of England and Wales.<br/>11. If these Terms and Conditions are not accepted in full, the use of this site must be terminated immediately."
+        });
+    }
+   </script>
 
 </body>
     <!--https://codepen.io/shashank-agrawal/pen/pbazdO-->

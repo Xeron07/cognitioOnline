@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Library</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+
+<!--Font awesome-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+     <a class="navbar-brand" href="#">
+    <img src="/ext/images/clogo.png" alt="Logo" style="width:40px;">
+  </a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item ">
+      <a class="nav-link" href="/home">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/home">Books</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/home">Pdf</a>
+    </li>
+  
+  </ul>
+  <ul class="navbar-nav">
+         <li class="nav-item active">
+      <a class="nav-link" href="/profile" data-toggle="tooltip" data-placement="top">
+          <p  style="margin-left: -50px">
+          <span class="fa-stack  has-badge" >
+          <i class="fa fa-circle-o fa-stack-2x" style="margin-left:-10.5px;margin-top:1px;" aria-hidden="true"></i>
+          <i class="fa fa-user" aria-hidden="true" ></i><i style="margin-left: -30px"><%=uname%></i>
+          </span>
+          </p>
+      </a>
+      
+    </li>
+      <li class="nav-item active" onclick="/logout">
+      <a class="nav-link" href="/logout" data-toggle="tooltip" data-placement="top" title="Log Out">
+          <p>
+          <span class="fa-stack  has-badge" >
+          <i class="fa fa-circle-o fa-stack-2x" style="margin-left:-10.5px;margin-top:1px;" aria-hidden="true"></i>
+          <i class="fa fa-sign-out" aria-hidden="true"></i><i style="margin-left: -10px">LogOut</i> 
+          </span>
+          </p>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<%var i=0;%>
+<section style="margin-top: 10%">
+  <div class="header">
+    <div class="container-fluid">
+      <div class="row" style="margin-top: 55px; color: red">
+        <div class="col-sm-6">
+          <h1>Books Category : <%=bdata[0].category%></h1>
+        </div>
+        
+        
+      </div>
+      <hr>
+    </div>
+  
+  </div>
+  
+
+
+
+</section>
+
+
+
+<section>
+  <div class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <img src="/ext/images/book-img/<%=bdata[0].pic%>" class="img-responsive">
+        </div>
+        <div class="col-sm-9 " style="margin-left: S0%">
+          <h3><%=bdata[0].bookName%></h3>
+          <p><b>By- <%=bdata[0].author%></b>
+            <br>
+            <br>
+            <p><b>Publisher:<%=bdata[0].publisher%></b><br>
+            <b>Release Date:<%=bdata[0].publishDate%></b></h5>
+          </p>
+ 
+  <br/>
+  <h2><u><b>Description:</b></u></h2>
+
+  <p>
+    <%=bdata[0].description%>
+ </p>
+        </div>
+        <button type="button" class="btn btn-outline-success btn-block" onclick="location.replace('/home/borrow/<%=bdata[0].ID%>')">Borrow</button>
+        
+      </div>
+    
+    </div>
+  
+  </div>
+  
+
+
+
+</section>
+
+
+
+
+</body>
+</html>

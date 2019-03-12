@@ -8,6 +8,8 @@ router.get('/',function(req,res){
 });
 
 
+
+
 router.post('/',function(req,res){
    var user={ 
        email:req.body.email,
@@ -15,17 +17,21 @@ router.post('/',function(req,res){
     };
     userModel.validate(user, function(result){
 			if(result != ""){
-				req.session.un = req.body.uname;
+				req.session.uname = result.name;
 				req.session.uid = result.id;
-                var varify=result.varified;
-                console.log(varify);
-                if(varify==0){
-                    var data={err:"Please varify your email address"};
-				res.render('login/index',data);
-                }else{
-				res.redirect('/');
-                }
-			}else{
+                req.session.type=result.type;
+                console.log(req.session.uid);
+                if(result.type==="Admin")
+                    res.redirect('/admin');
+                else if(result.type==="publish")
+                     res.redirect('/publisher');
+                 else
+                     res.redirect('/home');
+             
+ 
+                   
+			
+           			}else{
                 var data={err:"Wrong Email or Password"};
 				res.render('login/index',data);
 			}		

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>Success</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+</head>
+<%if(success!=null) {%>
+    
+    <script>$(document).ready(function(){
+            Swal.fire({
+  type: 'success',
+  title: 'Congratulations.!!',
+  text: '<%=success%>'
+});
+            
+        });</script>
+<% } %>
+<body class="container">
+<br/>
+<br/>
+<br/>
+<h1 align="center" style="color:#065e39">Congratulation!!</h1><br/>
+<h3 align="center" style="color:#1d8e78">Registration Successful.............</h3><br/>
+<h3 align="center">A varification email has been sent to your email address . Please varify your email address or you can't login to your account.</h3>
+<br/>
+<br/>
+<br/>
+
+<button style="margin-left:40%" type="button" onclick="location.replace('/login')" class="btn btn-outline-primary">Go to Login..</button>
+</body>
+</html>
